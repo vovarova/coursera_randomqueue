@@ -77,7 +77,7 @@ public class Deque<Item> implements Iterable<Item> {
         preLast.next = last;
     }
 
-    Item removeElement(Node node, Consumer<Node> removeOperation) {
+    private Item removeElement(Node node, Consumer<Node> removeOperation) {
         validateRemovingItem();
         size--;
         Item result = node.val;
@@ -110,7 +110,7 @@ public class Deque<Item> implements Iterable<Item> {
         return new CustomIterator();
     }
 
-    class CustomIterator implements Iterator<Item> {
+    private class CustomIterator implements Iterator<Item> {
         private Node current = first;
 
         @Override
@@ -120,6 +120,9 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public Item next() {
+            if(!hasNext()){
+                throw  new NoSuchElementException();
+            }
             Item res = current.val;
             current = current.next;
             return res;
@@ -139,6 +142,7 @@ public class Deque<Item> implements Iterable<Item> {
 
 
     public static void main(String[] args) {
+
         Deque<Integer> integers = new Deque<>();
         integers.addFirst(12);
         integers.addFirst(1);
